@@ -35,53 +35,97 @@ app.controller('listController',['$scope','$http', function($scope,$http){
 
    // $scope.startAjax = function(){
 
-      // 환율 가지고 오기 
-      var httpPromise = $http({
-        "method":"get",      
-       //  "url":"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fd%2Fquotes.csv%3Fe%3D.csv%26f%3Dc4l1%26s%3DUSDKRW%3DX%22%3B&format=json&diagnostics=true&callback="
-         "url" :"http://api.fixer.io/latest?base=USD"
-      });
 
-      httpPromise.success(function(data,status,
-        header,config) {
-
-        var currency_amt = data.query.results.row.col1;
+    $http({
+    method: 'GET' ,
+    url: 'http://api.fixer.io/latest?base=USD',
+   
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    }).success(function(response) {
+        console.log('Success');
+        console.log('response='+JSON.stringify(response));
+        var currency_amt =response.rates.KRW;
         $scope.currency_amt = currency_amt;
-      });
 
-      httpPromise.error(function(data,status,header,config){
-          alert("환율 실패");
-      });
-
-      var username = "3b079ff3387899bfae4c599ce5ea14c9";
-      var password = "a64d5125c63f9953384f5937ddbde822";
-      var auth = "Basic " + new Buffer(username + ':' + password).toString('base64');
-    //주식 정보 가지고 오기 
-      var httpPromise2 = $https({
-        "method":"get",      
-      //   "url":"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%3D%22FDC%22%20&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="
-          "url":"https://api.intrinio.com/data_point?identifier=FDC&item=ask_price" ,
-          "Authorization": auth
-
+    }).finally(function() {
+        console.log('Complete');
     });
 
-      //성공시 호출되는 콜백
-      httpPromise2.success(function(data,status,
-        header,config) {
+    //주식
+      var username = "3b079ff3387899bfae4c599ce5ea14c9";
+      var password = "a64d5125c63f9953384f5937ddbde822";
+      //var auth = "Basic " + (username + ':' + password).toString('base64');
+      var auth = "Basic " + btoa(username + ':' + password);
 
-        var stock_amt =  data.query.results.quote.LastTradePriceOnly;
-        var Change =  data.query.results.quote.Change;
+    $http({
+    method: 'GET' ,
+    url: 'https://api.intrinio.com/data_point?identifier=FDC&item=ask_price',
+ 
+    headers: {
+        "Authorization": auth
+    }
+    }).success(function(response) {
+        console.log('Success');
+        console.log('response='+JSON.stringify(response));
+       var stock_amt =  response.value;
+       $scope.stock_amt = stock_amt;
+        
+    }).finally(function() {
+        console.log('Complete');
+    });
+
+
+   //과거 api 가지고 오기 
+    //   // 환율 가지고 오기 
+    //   var httpPromise = $http({
+    //     "method":"get",      
+    //    //  "url":"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fd%2Fquotes.csv%3Fe%3D.csv%26f%3Dc4l1%26s%3DUSDKRW%3DX%22%3B&format=json&diagnostics=true&callback="
+    //      "url" :"http://api.fixer.io/latest?base=USD"
+    //   });
+
+    //   httpPromise.success(function(data,status,
+    //     header,config) {
+
+    //     var currency_amt = data.query.results.row.col1;
+    //     $scope.currency_amt = currency_amt;
+    //   });
+
+    //   httpPromise.error(function(data,status,header,config){
+    //       alert("환율 실패");
+    //   });
+
+    //   var username = "3b079ff3387899bfae4c599ce5ea14c9";
+    //   var password = "a64d5125c63f9953384f5937ddbde822";
+    //   var auth = "Basic " + (username + ':' + password) .toString('base64');
+    // //주식 정보 가지고 오기 
+    //   var httpPromise2 = $http({
+    //     "method":"get",      
+    //   //   "url":"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%3D%22FDC%22%20&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="
+    //       "url":"https://api.intrinio.com/data_point?identifier=FDC&item=ask_price" ,
+    
+
+    // });
+
+    //   //성공시 호출되는 콜백
+    //   httpPromise2.success(function(data,status,
+    //     header,config) {
+
+    //     var stock_amt =  data.query.results.quote.LastTradePriceOnly;
+    //     var Change =  data.query.results.quote.Change;
        
         
-        $scope.stock_amt = stock_amt;
-        $scope.Change = Change;
+    //     $scope.stock_amt = stock_amt;
+    //     $scope.Change = Change;
        
-      });
+    //   });
 
-      //실패시 호출되는 콜백
-      httpPromise2.error(function(data,status,header,config){
-          alert("주식 실패");
-      });
+    //   //실패시 호출되는 콜백
+    //   httpPromise2.error(function(data,status,header,config){
+    //      alert(errors);
+    //       alert("주식 실패");
+    //   });
 
   
 }]);
