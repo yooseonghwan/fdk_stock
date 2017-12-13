@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic']);
+var app = angular.module('starter', ['ionic','chart.js']);
 
 
 app.run(function($ionicPlatform) {
@@ -75,6 +75,71 @@ app.controller('listController',['$scope','$http', function($scope,$http){
     }).finally(function() {
         console.log('Complete');
     });
+
+
+    //일자별 
+    $http({
+      method: 'GET' ,
+      url: 'https://api.intrinio.com/prices?identifier=FDC&start_date=2017-11-01&end_date=2017-12-13',
+   
+      headers: {
+          "Authorization": auth
+      }
+      }).success(function(response) {
+          console.log('Success');
+      
+          //그래프
+
+           var data = response.data;
+
+       //   console.log('response.data='+JSON.stringify(data));
+          //  console.log('response.data.close='+JSON.stringify(response.data.close));
+          var dateAry = new Array();
+          var priceAry = new Array();
+
+          for( var key in data ) {
+            dateAry.push(data[key].date);
+            priceAry.push(data[key].close);
+         
+           }
+          
+           priceAry =priceAry.reverse();
+           $scope.labels = dateAry.reverse();
+           $scope.data   = [priceAry,priceAry];
+
+                   
+          //  $scope.onClick = function (points, evt) {
+          //  //  console.log(points, evt);
+          //  };
+           
+           $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+           $scope.options = {
+             scales: {
+               yAxes: [
+                 {
+                   id: 'y-axis-1',
+                   type: 'linear',
+                   display: true,
+                   position: 'left'
+                 },
+                 {
+                   id: 'y-axis-2',
+                   type: 'linear',
+                   display: true,
+                   position: 'right'
+                 }
+               ]
+             }
+           };
+
+          
+      }).finally(function() {
+          console.log('Complete');
+      });
+
+    
+      
+
 
 
    //과거 api 가지고 오기 

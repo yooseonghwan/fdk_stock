@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="js/rs-plugin/css/settings.css">
     <link rel="stylesheet" href="css/freeze.css">
     <script type="text/javascript" src="js/modernizr.custom.32033.js"></script>
-
+    <script rel="stylesheet" src="js/fusioncharts.js"></script>
+  
+      
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -28,25 +30,15 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script rel="stylesheet" src="js/chart.js"></script>
+    <script rel="stylesheet" src="js/angular-chart.js"></script>
   </head>
   <body ng-controller="listController">
 
 <ion-nav-view>
   
 
-  <body background="../img/freeze/bk-freeze-ga.jpg">
-
-    <!-- <div class="pre-loader">
-        <div class="load-con">
-            <img src="img/freeze/logo.png" class="animated fadeInDown" alt="">
-            <div class="spinner">
-              <div class="bounce1"></div>
-              <div class="bounce2"></div>
-              <div class="bounce3"></div>
-            </div>
-        </div>
-    </div> -->
-   
+  <body background="../img/freeze/bk-freeze-ga.jpg">   
     <header>    
     </header>
 
@@ -57,68 +49,13 @@
         <section id="features">
             <div class="container">
                 <div class="section-heading scrollpoint sp-effect3">
-                    <h1>First Data</h1>
-                    <<!-- div class="divider"></div> -->
-                 <!--     <p> {{today | date:'yyyy-MM-dd HH:mm:ss '}}  </p>  -->
+                    <!-- <h1>First Data</h1> -->
+                    <!-- div class="divider"></div> -->
+                  <!-- <p> {{today | date:'yyyy-MM-dd HH:mm:ss '}}  </p>   -->
                 </div>
                 <div class="row">
-
-                  <!--   <div class="col-md-4 col-sm-4 scrollpoint sp-effect1">
-
-                        <div class="media media-left feature">
-
-                            <a class="pull-right" href="#">
-                                <i class="fa fa-cogs fa-2x"></i>
-                            </a>
-                            <div class="media-body">
-                                <h3 class="media-heading">User Settings</h3>
-                                Lorem ipsum dolor sit amet.
-                            </div>
-                        </div>
-                        <div class="media media-left feature">
-                            <a class="pull-right" href="#">
-                                <i class="fa fa-envelope fa-2x"></i>
-                            </a>
-                            <div class="media-body">
-                                <h3 class="media-heading">Messages Inbox</h3>
-                                Lorem ipsum dolor sit amet.
-                            </div>
-                        </div>
-                        <div class="media media-left feature">
-                            <a class="pull-right" href="#">
-                                <i class="fa fa-users fa-2x"></i>
-                            </a>
-                            <div class="media-body">
-                                <h3 class="media-heading">Friends List</h3>
-                                Lorem ipsum dolor sit amet.
-                            </div>
-                        </div>
-                        <div class="media media-left feature">
-                            <a class="pull-right" href="#">
-                                <i class="fa fa-comments fa-2x"></i>
-                            </a>
-                            <div class="media-body">
-                                <h3 class="media-heading">Live Chat Messages</h3>
-                                Lorem ipsum dolor sit amet.
-                            </div>
-                        </div>
-                        <div class="media media-left feature">
-                            <a class="pull-right" href="#">
-                                <i class="fa fa-calendar fa-2x"></i>
-                            </a>
-                            <div class="media-body">
-                                <h3 class="media-heading">Calendar / Planner</h3>
-                                Lorem ipsum dolor sit amet.
-                            </div>
-                        </div>
-                    </div>  -->
- 
-
-                   <div class="col-md-4 col-sm-4" >
-                    
+                    <div class="col-md-4 col-sm-4" >                    
                     </div> 
-
-
                     <div class="col-md-4 col-sm-4 scrollpoint sp-effect2">
                         
                         <div class="media feature">
@@ -142,7 +79,7 @@
                             </div>
                         </div> -->
 
-                           <div class="media feature">
+                           <!-- <div class="media feature">
                             <a class="pull-left" href="/">
                                 <i class="fa fa-map-marker fa-2x"></i>
                             </a>
@@ -150,7 +87,7 @@
                                 <h3 class="media-heading">KRW</h3>
                               Location
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="media feature">
@@ -197,13 +134,35 @@
             </div>
         </section>
 
-       <section id="demo">
+
+        <canvas id="line" class="chart chart-line" chart-data="data"
+        chart-labels="labels" chart-series="series" chart-options="options"
+        chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas>
+
+        
+
+        <!-- <table class="table" >
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+               <tr ng-repeat="module in modules | orderBy: 'date' ">
+                    <td class="media-heading" >{{module.date}}   </td> 
+                    <td class="media-heading">{{module.close}}  </td> 
+                </tr>
+           </table>
+            -->
+
+       <!-- <section id="demo">
             <div class="container">
                 <div class="section-heading scrollpoint sp-effect3">
                   <img src="img/freeze/logo.png" alt="" class="logo">                        
                 </div>  
                     </div>
-        </section>  
+        </section>   -->
 
     
     </div>
