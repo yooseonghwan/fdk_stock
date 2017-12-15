@@ -172,7 +172,7 @@ app.controller('listController',['$scope','$http', function($scope,$http){
         $scope.get_stock_value= getCookie("count");
       }
      
-    
+  
 
 
 }]);
